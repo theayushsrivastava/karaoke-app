@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "karaoke-app",
-    "slug": "karaoke-app",
+    "name": "karaokesingalong",
+    "slug": "karaoke-single-along",
+    "scheme": "karaokesingalong",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,10 +21,26 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.c2mtechnology.karokesingalong",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-audio",
+      "expo-web-browser",
+      "expo-secure-store"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d51cf3ae-afdc-4392-97ff-c2dd2763b261"
+      }
+    },
+    "owner": "ayusht16"
   }
 }

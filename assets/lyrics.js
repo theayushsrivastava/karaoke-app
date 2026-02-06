@@ -1,0 +1,52 @@
+export const testLyrics = `
+[00:21.10]I found a love for
+[00:28.51]Well darling just dive right in
+[00:32.32]Or follow my lead
+[00:36.24]I found a girl
+[00:40.03]Beautiful and sweet
+[00:43.64]I never knew you were the someone
+[00:47.57]Waiting for me
+[00:50.42]Cause we were just kids when we fell in love
+[00:55.07]Not knowing what
+[00:58.90]I will not give
+[01:02.88]This time
+[01:06.60]Well darling just kiss me slow
+[01:09.98]Your heart is all between my undergrads
+[01:35.67]Well listen into our favorite song
+[01:39.09]When you said you looked a mess
+[01:42.46]I whispered underneath my breath
+[01:46.25]But you heard it
+[01:49.09]Darling you wrote tonight
+[01:59.67]Well I found a woman
+[02:03.32]Stronger than anyone I know
+[02:06.87]She shares my dreams
+[02:08.96]I hope that someday
+[02:10.72]I'll share her home
+[02:14.62]I found a love
+[02:16.71]To carry more than just my secrets
+[02:22.40]To carry love
+[02:24.36]To carry children
+[02:26.19]Of our own
+[02:28.97]We are still kids but we're so in love
+[02:33.71]Fighting against all odds
+[02:37.41]I know we'll be
+[02:41.50]This time
+[02:45.68]Well darling just hold me my girl I'll be
+[02:52.78]I see my future
+[03:04.69]The dark blue between my arms
+[03:12.31]The grass
+[03:13.78]Well listen into our favorite song
+[03:17.58]When I saw you
+[03:21.21]Looking so beautiful
+[03:23.81]I don't
+[03:27.71]Darling you wrote tonight
+[03:52.78]Well between my arms
+[04:00.47]Well listen into our favorite song
+[04:03.08]I have faith in what I see
+[04:06.50]Now I know I have met an angel
+[04:10.93]In person
+[04:12.90]And she looks
+[04:15.18]Perfect
+[04:16.43]I don't love this
+[04:20.63]You
+`;
