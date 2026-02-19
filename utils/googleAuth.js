@@ -1,26 +1,29 @@
-import * as WebBrowser from "expo-web-browser";
 import * as AuthSession from "expo-auth-session";
+import Constants from "expo-constants";
+import * as WebBrowser from "expo-web-browser";
 
-// Ensures the auth redirect completes cleanly when returning from the browser.
-WebBrowser.maybeCompleteAuthSession();
+// IMPORTANT: For Expo Go, we need to use the proxy redirect URI
+// This must be registered in Google Cloud Console under Authorized Redirect URIs
+const EXPO_OWNER = Constants.expoConfig?.owner;
+const EXPO_SLUG = Constants.expoConfig?.slug;
 
+export const EXPO_PROXY_PROJECT =
+  EXPO_OWNER && EXPO_SLUG ? `@${EXPO_OWNER}/${EXPO_SLUG}` : "@ayusht16/karaoke-single-along";
+
+export const EXPO_PROXY_REDIRECT_URI = `https://auth.expo.io/${EXPO_PROXY_PROJECT}`;
+
+// Web client ID for web-based OAuth (used with Expo proxy)
 export const GOOGLE_WEB_CLIENT_ID =
   "680808992323-6n1qu5476tod7bm8cohpvojnlt8cf0vm.apps.googleusercontent.com";
 
-// IMPORTANT:
-// For Expo Go (proxy), you must register this redirect URI in Google Cloud Console:
-//   https://auth.expo.io/@ayusht16/karaoke-app
-// If you change the Expo username or slug, update this value.
-const EXPO_PROXY_PROJECT = "@ayusht16/karaokesingalong";
-const EXPO_PROXY_REDIRECT_URI = `https://auth.expo.io/${EXPO_PROXY_PROJECT}`;
+// Native client ID for direct Android/iOS auth (when not using proxy)
+export const GOOGLE_ANDROID_CLIENT_ID =
+  "680808992323-u43e89pltlf6n22c6qdf604qpmqpbggu.apps.googleusercontent.com";
 
 export function createGoogleAuthRequest({ useProxy = true } = {}) {
-  // In recent SDKs, relying on makeRedirectUri({useProxy:true}) can still yield
-  // a local exp:// redirect depending on runtime. For Expo Go proxy auth,
-  // we force the documented proxy redirect explicitly.
-  const redirectUri = useProxy
-    ? EXPO_PROXY_REDIRECT_URI
-    : AuthSession.makeRedirectUri();
+  // For Expo Go, we must use the proxy redirect URI
+  const redirectUri = useProxy ? EXPO_PROXY_REDIRECT_URI : AuthSession.makeRedirectUri();
+  console.log("Generated redirect URI:", redirectUri);
 
   const discovery = {
     authorizationEndpoint: "https://accounts.google.com/o/oauth2/v2/auth",
@@ -31,13 +34,30 @@ export function createGoogleAuthRequest({ useProxy = true } = {}) {
   const requestConfig = {
     clientId: GOOGLE_WEB_CLIENT_ID,
     scopes: ["openid", "profile", "email"],
-    redirectUri,
+    redirectUri: redirectUri,
     prompt: "select_account",
     responseType: AuthSession.ResponseType.Code,
-    usePKCE: true,
+    usePKCE: false,
+    access_type: "offline"
   };
 
   return { discovery, requestConfig, redirectUri };
+}
+
+export async function signInWithGoogle() {
+  try {
+    // Ensure WebBrowser is properly configured
+    await WebBrowser.maybeCompleteAuthSession();
+    
+    const { discovery, requestConfig } = createGoogleAuthRequest({ useProxy: true });
+    
+    // Use the existing AuthSession hook approach instead of startAsync
+    // This will be handled by the ProfileScreen component
+    return { success: false, error: 'Use the existing AuthSession hook approach' };
+  } catch (error) {
+    console.error('Google sign-in error:', error);
+    return { success: false, error: error.message };
+  }
 }
 
 export async function fetchGoogleUserInfo(accessToken) {

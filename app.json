@@ -2,7 +2,7 @@
   "expo": {
     "name": "karaokesingalong",
     "slug": "karaoke-single-along",
-    "scheme": "karaokesingalong",
+    "scheme": "karaoke-single-along",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.c2mtechnology.karokesingalong",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -34,7 +38,13 @@
     "plugins": [
       "expo-audio",
       "expo-web-browser",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.680808992323-u43e89pltlf6n22c6qdf604qpmqpbggu"
+        }
+      ]
     ],
     "extra": {
       "eas": {

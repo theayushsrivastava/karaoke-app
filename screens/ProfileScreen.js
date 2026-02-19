@@ -5,7 +5,13 @@ import * as AuthSession from "expo-auth-session";
 
 import { AuthContext } from "../context/AuthContext";
 import { tokens } from "../theme";
-import { createGoogleAuthRequest, fetchGoogleUserInfo } from "../utils/googleAuth";
+import {
+  createGoogleAuthRequest,
+  EXPO_PROXY_PROJECT,
+  EXPO_PROXY_REDIRECT_URI,
+  fetchGoogleUserInfo,
+  signInWithGoogle,
+} from "../utils/googleAuth";
 import AppSafeArea from "../components/common/AppSafeArea";
 
 export default function ProfileScreen() {
@@ -33,6 +39,8 @@ export default function ProfileScreen() {
       try {
         if (response?.type !== "success") return;
 
+        console.log("AuthSession response:", response);
+
         // Authorization Code + PKCE flow
         const code = response.params?.code;
         if (!code) {
@@ -52,6 +60,8 @@ export default function ProfileScreen() {
           discovery
         );
 
+        console.log("Token response:", tokenResp);
+
         const accessToken = tokenResp?.accessToken;
         if (!accessToken) {
           setSnack("Login failed: missing access token.");
@@ -63,6 +73,7 @@ export default function ProfileScreen() {
         await setUser(profile);
       } catch (e) {
         if (!mounted) return;
+        console.error("Login error:", e);
         setSnack(e?.message || "Login failed.");
       }
     })();
@@ -98,7 +109,12 @@ export default function ProfileScreen() {
         <Button
           mode="contained"
           disabled={!request}
-          onPress={() => promptAsync({ useProxy: true })}
+          onPress={() =>
+            promptAsync({
+              useProxy: true,
+              showInRecents: true,
+            })
+          }
           style={styles.primaryBtn}
           contentStyle={{ paddingVertical: 10 }}
         >
